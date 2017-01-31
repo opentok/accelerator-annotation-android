@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">annotations-acc-pack</string>
+    <string name="annotations_tool">Annotations tool</string>
+    <string name="done_btn">Done</string>
+</resources>
