@@ -86,8 +86,6 @@ public class AnnotationsView extends ViewGroup implements AnnotationsToolbar.Act
     private Annotatable mCurrentAnnotatable;
 
     private boolean defaultLayout = false;
-
-    //private AccPackSession mSession;
     private String mRemoteConnId;
 
     private String mPartnerId;
