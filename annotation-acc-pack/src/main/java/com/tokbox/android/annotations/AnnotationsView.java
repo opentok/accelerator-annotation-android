@@ -31,13 +31,13 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.tokbox.android.accpack.AccPackSession;
 import com.tokbox.android.annotations.config.OpenTokConfig;
 import com.tokbox.android.annotations.utils.AnnotationsVideoRenderer;
 import com.tokbox.android.logging.OTKAnalytics;
 import com.tokbox.android.logging.OTKAnalyticsData;
 import com.tokbox.android.otsdkwrapper.listeners.SignalListener;
 import com.tokbox.android.otsdkwrapper.signal.SignalInfo;
+import com.tokbox.android.otsdkwrapper.wrapper.OTAcceleratorSession;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -106,7 +106,7 @@ public class AnnotationsView extends ViewGroup implements AnnotationsToolbar.Act
 
     private ViewGroup mContentView;
 
-    private AccPackSession mSession;
+    private OTAcceleratorSession mSession;
 
 
     /**
@@ -183,7 +183,7 @@ public class AnnotationsView extends ViewGroup implements AnnotationsToolbar.Act
      * @param isScreensharing
      * @throws Exception
      */
-    public AnnotationsView(Context context, AccPackSession session, String partnerId, boolean isScreensharing) throws Exception {
+    public AnnotationsView(Context context, OTAcceleratorSession session, String partnerId, boolean isScreensharing) throws Exception {
         super(context);
 
         if ( session == null ) {
@@ -214,7 +214,7 @@ public class AnnotationsView extends ViewGroup implements AnnotationsToolbar.Act
      * @param remoteConnId
      * @throws Exception
      */
-    public AnnotationsView(Context context, AccPackSession session, String partnerId, String remoteConnId) throws Exception {
+    public AnnotationsView(Context context, OTAcceleratorSession session, String partnerId, String remoteConnId) throws Exception {
         super(context);
         if ( session == null ) {
             throw new Exception("Wrapper cannot be null in the annotations");
@@ -334,8 +334,6 @@ public class AnnotationsView extends ViewGroup implements AnnotationsToolbar.Act
         int heightPixels = 0;
 
         if (this.getLayoutParams() == null || this.getLayoutParams().width <= 0 || this.getLayoutParams().height <=0 || defaultLayout) {
-            Log.i("MARINAS", "DEFAULT LAYOUT");
-
             //default case
             defaultLayout = true;
             getScreenRealSize();
@@ -343,16 +341,12 @@ public class AnnotationsView extends ViewGroup implements AnnotationsToolbar.Act
             LayoutParams params = this.getLayoutParams();
 
             params.height = this.height - mToolbar.getHeight() - (this.height - getDisplayHeight());
-            Log.i("MARINAS", "SIZE getactionbar height: "+getActionBarHeight());
 
             if ( getActionBarHeight() != 0 ){
                 params.height = params.height - getActionBarHeight();
             }
             params.width = this.width;
             this.setLayoutParams(params);
-            Log.i("MARINAS", "SIZE VIEW width: "+params.width);
-            Log.i("MARINAS", "SIZE VIEW height: "+params.height);
-            Log.i("MARINAS", "SIZE TOOLBAR height: "+mToolbar.getHeight());
         }
         else {
 
@@ -613,7 +607,7 @@ public class AnnotationsView extends ViewGroup implements AnnotationsToolbar.Act
 
     private void sendAnnotation(String type, String annotation) {
         if ( mSession != null  && !isScreensharing) {
-            mSession.sendSignal(new SignalInfo(mSession.getConnection().getConnectionId(), null, type, annotation), null); //TODO MARINAS: SEND TO ALL
+            mSession.sendSignal(new SignalInfo(mSession.getConnection().getConnectionId(), null, type, annotation), null);
         }
     }
 
