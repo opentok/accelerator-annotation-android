@@ -3,13 +3,12 @@ package com.tokbox.android.annotations.test;
 
 
 import com.opentok.android.Publisher;
-import com.opentok.android.Subscriber;
-import com.tokbox.android.accpack.AccPackSession;
 import com.tokbox.android.annotations.AnnotationsToolbar;
 import com.tokbox.android.annotations.AnnotationsView;
 import com.tokbox.android.annotations.config.APIConfig;
 import com.tokbox.android.annotations.testbase.TestBase;
 import com.tokbox.android.annotations.utils.AnnotationsVideoRenderer;
+import com.tokbox.android.otsdkwrapper.wrapper.OTAcceleratorSession;
 
 import org.junit.Assert;
 
@@ -28,7 +27,7 @@ public class AnnotationsViewTest extends TestBase {
         boolean isScreensharing = true;
 
         try{
-            session = new AccPackSession(context, apiKey, sessionId);
+            session = new OTAcceleratorSession(context, apiKey, sessionId);
             session.setSessionListener(sessionListener);
             session.connect(token);
 
@@ -59,7 +58,7 @@ public class AnnotationsViewTest extends TestBase {
         boolean isScreensharing = true;
 
         try{
-            session = new AccPackSession(context, apiKey, sessionId);
+            session = new OTAcceleratorSession(context, apiKey, sessionId);
             session.setSessionListener(sessionListener);
             session.connect(token);
 
@@ -95,7 +94,7 @@ public class AnnotationsViewTest extends TestBase {
         AnnotationsView annotationsView = null;
 
         try {
-            session = new AccPackSession(context, apiKey, sessionId);
+            session = new OTAcceleratorSession(context, apiKey, sessionId);
             session.setSessionListener(sessionListener);
 
             annotationsView = new AnnotationsView(mContext, session, apiKey, isScreensharing);
@@ -111,7 +110,7 @@ public class AnnotationsViewTest extends TestBase {
         boolean isScreensharing = true;
 
         try{
-            session = new AccPackSession(context, apiKey, sessionId);
+            session = new OTAcceleratorSession(context, apiKey, sessionId);
             session.setSessionListener(sessionListener);
             session.connect(token);
 
@@ -135,7 +134,7 @@ public class AnnotationsViewTest extends TestBase {
         boolean isScreensharing = true;
 
         try {
-            session = new AccPackSession(context, apiKey, sessionId);
+            session = new OTAcceleratorSession(context, apiKey, sessionId);
             session.setSessionListener(sessionListener);
             session.connect(token);
 
@@ -160,7 +159,7 @@ public class AnnotationsViewTest extends TestBase {
         boolean isScreensharing = true;
 
         try{
-            session = new AccPackSession(context, apiKey, sessionId);
+            session = new OTAcceleratorSession(context, apiKey, sessionId);
             session.setSessionListener(sessionListener);
             session.connect(token);
 
@@ -184,7 +183,7 @@ public class AnnotationsViewTest extends TestBase {
         boolean isScreensharing = true;
 
         try {
-            session = new AccPackSession(context, apiKey, sessionId);
+            session = new OTAcceleratorSession(context, apiKey, sessionId);
             session.setSessionListener(sessionListener);
             session.connect(token);
 

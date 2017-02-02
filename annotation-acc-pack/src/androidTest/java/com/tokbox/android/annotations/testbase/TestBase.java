@@ -9,7 +9,7 @@ import com.opentok.android.Publisher;
 import com.opentok.android.PublisherKit;
 import com.opentok.android.Session;
 import com.opentok.android.Stream;
-import com.tokbox.android.accpack.AccPackSession;
+import com.tokbox.android.otsdkwrapper.wrapper.OTAcceleratorSession;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
@@ -28,7 +28,7 @@ public class TestBase extends AndroidTestCase {
     protected String sessionId;
     protected String token;
 
-    protected AccPackSession session;
+    protected OTAcceleratorSession session;
 
     protected AtomicBoolean sessionConnected = new AtomicBoolean();
     protected AtomicBoolean sessionDisconnected = new AtomicBoolean();
