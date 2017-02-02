@@ -1,4 +1,4 @@
-![logo](../tokbox-logo.png)
+![logo](tokbox-logo.png)
 
 # OpenTok Accelerator Annotations for Android<br/>Version 2.0.0
 
