@@ -1,5 +1,7 @@
 ![logo](tokbox-logo.png)
 
+[![Build Status](https://travis-ci.com/opentok/accelerator-annotation-android.svg?token=CxoLD2TL8UCwsuAUJUsN&branch=develop)](https://travis-ci.com/opentok/accelerator-annotation-android)
+
 # OpenTok Accelerator Annotations for Android<br/>Version 2.0.0
 
 ## Quick start
@@ -109,7 +111,7 @@ try {
   AnnotationsView annotationsView = new AnnotationsView(this, sdkWrapper, OpenTokConfig.API_KEY, mComm.getRemote());
   annotationsView.attachToolbar(mAnnotationsToolbar);
   previewContainer.addView(annotationsView);
-          
+
 } catch (Exception e) {
   Log.i(LOG_TAG, "Exception - add annotations view " + e);
 }
