@@ -1,6 +1,6 @@
 ![logo](tokbox-logo.png)
 
-# OpenTok Accelerator Annotations for Android<br/>Version 2.0.0
+# OpenTok Accelerator Annotations for Android<br/>Version 1.0.0
 
 ## Quick start
 
@@ -38,7 +38,7 @@ maven { url  "http://tokbox.bintray.com/maven" }
 <li>Modify the <b>build.gradle</b> for your activity and add the following code snippet to the section labeled 'dependencies’:
 
 <code>
-compile 'com.opentok.android:opentok-accelerator-textchat:2.1.0'
+compile 'com.opentok.android:opentok-accelerator-annotation:1.0.0'
 </code>
 
 </li>
@@ -92,24 +92,39 @@ The `AnnotationsToolbar` offers the following actions:
 
 #### Add a custom annotation renderer
 
-If you would like to create a new instance of the `AnnotationsVideoRenderer` class or a new custom video renderer, start with this line of code:
+If you would like to create a new instance of the `AnnotationsVideoRenderer` class or a new custom video renderer, for example, to manage the screencapture option in the annotations toolbar, start with this line of code:
 
 ```java
 AnnotationsVideoRenderer mRenderer = new AnnotationsVideoRenderer(this);
-mScreenPublisher.setRenderer(mRenderer);
-```
 
+```
 
 #### Attach the annotation canvas to a view
 
-You can attach an annotation canvas to a publisher or subscriber view:
+You can attach an annotation canvas to a publisher view, for example, to the screen sharing view:
 
 ```java
 try {
-  AnnotationsView annotationsView = new AnnotationsView(this, sdkWrapper, OpenTokConfig.API_KEY, mComm.getRemote());
-  annotationsView.attachToolbar(mAnnotationsToolbar);
-  previewContainer.addView(annotationsView);
-          
+  AnnotationsView mScreenAnnotationsView = new AnnotationsView(this, mWrapper.getSession(), OpenTokConfig.API_KEY, true);
+
+  mScreenAnnotationsView.attachToolbar(mAnnotationsToolbar);
+  mScreenAnnotationsView.setVideoRenderer(mScreensharingRenderer);
+  mScreenAnnotationsView.setAnnotationsListener(this);
+  ((ViewGroup) mScreenSharingView).addView(mScreenAnnotationsView);
+} catch (Exception e) {
+  Log.i(LOG_TAG, "Exception - add annotations view " + e);
+}
+```
+
+Or to a subscriber view:
+
+```java
+try {
+  AnnotationsView mRemoteAnnotationsView = new AnnotationsView(this, mWrapper.getSession(), OpenTokConfig.API_KEY, mRemoteConnId);
+  mRemoteAnnotationsView.setVideoRenderer(mRemoteRenderer);
+  mRemoteAnnotationsView.attachToolbar(mAnnotationsToolbar);
+  mRemoteAnnotationsView.setAnnotationsListener(this);
+  ((ViewGroup) mRemoteViewContainer).addView(mRemoteAnnotationsView);     
 } catch (Exception e) {
   Log.i(LOG_TAG, "Exception - add annotations view " + e);
 }
