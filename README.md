@@ -1,6 +1,7 @@
 ![logo](tokbox-logo.png)
 
 # OpenTok Accelerator Annotations for Android<br/>Version 1.0.0
+[![Build Status](https://travis-ci.com/opentok/accelerator-annotation-android.svg?token=CxoLD2TL8UCwsuAUJUsN&branch=master)](https://travis-ci.com/opentok/accelerator-annotation-android)
 
 ## Quick start
 
