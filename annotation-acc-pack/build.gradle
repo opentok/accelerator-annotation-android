@@ -104,5 +104,5 @@ dependencies {
     androidTestCompile 'com.android.support:appcompat-v7:25+'
     androidTestCompile 'junit:junit:4.+'
     androidTestCompile files('src/androidTest/libs/android-junit-report-1.5.8.jar')
-    compile 'com.opentok.android:opentok-accelerator-core:1.0.0'
+    compile 'com.opentok.android:opentok-accelerator-core:1.0.+'
 }
