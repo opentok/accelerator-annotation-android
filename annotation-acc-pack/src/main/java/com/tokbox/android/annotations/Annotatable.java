@@ -89,7 +89,6 @@ public class Annotatable {
     /**
      * Sets the AnnotatableType of the annotatable object
      * @param type
-     * @throws Exception
      */
     public void setType(AnnotatableType type) {
         this.type = type;

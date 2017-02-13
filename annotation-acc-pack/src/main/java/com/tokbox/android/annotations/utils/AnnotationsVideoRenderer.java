@@ -4,10 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.opengl.GLSurfaceView;
 import android.opengl.Matrix;
-import android.util.Log;
 import android.view.View;
-
-import com.opentok.android.BaseVideoRenderer;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -17,6 +14,9 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
+
+import com.opentok.android.BaseVideoRenderer;
+
 
 public class AnnotationsVideoRenderer extends BaseVideoRenderer {
 

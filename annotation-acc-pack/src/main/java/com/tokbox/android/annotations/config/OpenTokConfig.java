@@ -3,7 +3,7 @@ package com.tokbox.android.annotations.config;
 public class OpenTokConfig {
 
     // For internal use only. Please do not modify or remove this code.
-    public static final String LOG_CLIENT_VERSION = "android-vsol-2.0.0";
+    public static final String LOG_CLIENT_VERSION = "android-vsol-1.0.0-beta";
     public static final String LOG_COMPONENTID = "annotationsAccPack";
     public static final String LOG_ACTION_INITIALIZE = "Init";
     public static final String LOG_ACTION_DESTROY = "Destroy";

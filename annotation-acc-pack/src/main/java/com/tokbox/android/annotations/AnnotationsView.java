@@ -57,8 +57,8 @@ public class AnnotationsView extends ViewGroup implements AnnotationsToolbar.Act
     private static final String SIGNAL_TYPE = "otAnnotation";
     private static final String SIGNAL_PLATFORM = "android";
 
-    private AnnotationsPath mCurrentPath = null;
-    private AnnotationsText mCurrentText = null;
+    private AnnotationsPath mCurrentPath = new AnnotationsPath();
+    private AnnotationsText mCurrentText = new AnnotationsText();
     private Paint mCurrentPaint;
 
     private AnnotationsVideoRenderer videoRenderer;
@@ -111,9 +111,8 @@ public class AnnotationsView extends ViewGroup implements AnnotationsToolbar.Act
 
     /**
      * Monitors state changes in the Annotations component.
-     *
      **/
-    public  interface AnnotationsListener {
+    public interface AnnotationsListener {
 
         /**
          * Invoked when a new screencapture is ready
@@ -124,13 +123,11 @@ public class AnnotationsView extends ViewGroup implements AnnotationsToolbar.Act
 
         /**
          * Invoked when an annotations item in the toolbar is selected
-         *
          */
-        void onAnnotationsSelected(AnnotationsView.Mode mode);
+        void onAnnotationsSelected(Mode mode);
 
         /**
          * Invoked when the DONE button annotations item in the toolbar is selected
-         *
          */
         void onAnnotationsDone();
 
@@ -144,7 +141,6 @@ public class AnnotationsView extends ViewGroup implements AnnotationsToolbar.Act
 
     /**
      * Annotations actions
-     *
      */
     public enum Mode {
         Pen("otAnnotation_pen"),
@@ -167,8 +163,9 @@ public class AnnotationsView extends ViewGroup implements AnnotationsToolbar.Act
 
     /**
      * Constructor
+     *
      * @param context Application context
-     * @param attrs A collection of attributes
+     * @param attrs   A collection of attributes
      */
     public AnnotationsView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -177,6 +174,7 @@ public class AnnotationsView extends ViewGroup implements AnnotationsToolbar.Act
 
     /**
      * Creates a new AnnotationView instance for local screensharing. isScreensharing should be true
+     *
      * @param context
      * @param session
      * @param partnerId
@@ -186,10 +184,10 @@ public class AnnotationsView extends ViewGroup implements AnnotationsToolbar.Act
     public AnnotationsView(Context context, OTAcceleratorSession session, String partnerId, boolean isScreensharing) throws Exception {
         super(context);
 
-        if ( session == null ) {
+        if (session == null) {
             throw new Exception("Session cannot be null in the annotations");
         }
-        if ( session.getConnection() == null ){
+        if (session.getConnection() == null) {
             throw new Exception("Session is not connected");
         }
         this.mContext = context;
@@ -208,6 +206,7 @@ public class AnnotationsView extends ViewGroup implements AnnotationsToolbar.Act
 
     /**
      * Creates a new AnnotationsView instance for remote screensharing
+     *
      * @param context
      * @param session
      * @param partnerId
@@ -216,10 +215,10 @@ public class AnnotationsView extends ViewGroup implements AnnotationsToolbar.Act
      */
     public AnnotationsView(Context context, OTAcceleratorSession session, String partnerId, String remoteConnId) throws Exception {
         super(context);
-        if ( session == null ) {
+        if (session == null) {
             throw new Exception("Wrapper cannot be null in the annotations");
         }
-        if ( session.getConnection() == null ){
+        if (session.getConnection() == null) {
             throw new Exception("Session is not connected");
         }
         this.mContext = context;
@@ -238,11 +237,12 @@ public class AnnotationsView extends ViewGroup implements AnnotationsToolbar.Act
 
     /**
      * Attaches the Annotations Toolbar to the view
+     *
      * @param toolbar AnnotationsToolbar
      */
     public void attachToolbar(AnnotationsToolbar toolbar) throws Exception {
 
-        if ( toolbar == null ) {
+        if (toolbar == null) {
             throw new Exception("AnnotationsToolbar cannot be null");
         }
         mToolbar = toolbar;
@@ -260,10 +260,11 @@ public class AnnotationsView extends ViewGroup implements AnnotationsToolbar.Act
 
     /**
      * Sets an AnnotationsVideoRenderer
+     *
      * @param videoRenderer AnnotationsVideoRenderer
      */
     public void setVideoRenderer(AnnotationsVideoRenderer videoRenderer) throws Exception {
-        if ( videoRenderer == null ) {
+        if (videoRenderer == null) {
             throw new Exception("VideoRenderer cannot be null");
         }
         this.videoRenderer = videoRenderer;
@@ -278,6 +279,7 @@ public class AnnotationsView extends ViewGroup implements AnnotationsToolbar.Act
 
     /**
      * Sets AnnotationsListener
+     *
      * @param listener AnnotationsListener
      */
     public void setAnnotationsListener(AnnotationsListener listener) {
@@ -287,7 +289,7 @@ public class AnnotationsView extends ViewGroup implements AnnotationsToolbar.Act
     /**
      * Restarts the AnnotationsView. Clear all the annotations.
      */
-    public void restart(){
+    public void restart() {
         clearAll(false, mSession.getConnection().getConnectionId());
     }
 
@@ -298,7 +300,7 @@ public class AnnotationsView extends ViewGroup implements AnnotationsToolbar.Act
         resize();
     }
 
-    private void init(){
+    private void init() {
         String source = getContext().getPackageName();
 
         SharedPreferences prefs = getContext().getSharedPreferences("opentok", Context.MODE_PRIVATE);
@@ -311,14 +313,14 @@ public class AnnotationsView extends ViewGroup implements AnnotationsToolbar.Act
         //init analytics
         mAnalyticsData = new OTKAnalyticsData.Builder(OpenTokConfig.LOG_CLIENT_VERSION, source, OpenTokConfig.LOG_COMPONENTID, guidVSol).build();
         mAnalytics = new OTKAnalytics(mAnalyticsData);
-        if ( mSession != null ) {
+        if (mSession != null) {
             mAnalyticsData.setSessionId(mSession.getSessionId());
             mAnalyticsData.setConnectionId(mSession.getConnection().getConnectionId());
         }
-        if ( mPartnerId != null ) {
+        if (mPartnerId != null) {
             mAnalyticsData.setPartnerId(mPartnerId);
         }
-        mAnalytics. setData(mAnalyticsData);
+        mAnalytics.setData(mAnalyticsData);
 
         setWillNotDraw(false);
         mAnnotationsManager = new AnnotationsManager();
@@ -329,11 +331,11 @@ public class AnnotationsView extends ViewGroup implements AnnotationsToolbar.Act
         addLogEvent(OpenTokConfig.LOG_ACTION_INITIALIZE, OpenTokConfig.LOG_VARIATION_SUCCESS);
     }
 
-    private void resize(){
+    private void resize() {
         int widthPixels = 0;
         int heightPixels = 0;
 
-        if (this.getLayoutParams() == null || this.getLayoutParams().width <= 0 || this.getLayoutParams().height <=0 || defaultLayout) {
+        if (this.getLayoutParams() == null || this.getLayoutParams().width <= 0 || this.getLayoutParams().height <= 0 || defaultLayout) {
             //default case
             defaultLayout = true;
             getScreenRealSize();
@@ -342,13 +344,12 @@ public class AnnotationsView extends ViewGroup implements AnnotationsToolbar.Act
 
             params.height = this.height - mToolbar.getHeight() - (this.height - getDisplayHeight());
 
-            if ( getActionBarHeight() != 0 ){
+            if (getActionBarHeight() != 0) {
                 params.height = params.height - getActionBarHeight();
             }
             params.width = this.width;
             this.setLayoutParams(params);
-        }
-        else {
+        } else {
 
             defaultLayout = false;
             widthPixels = this.getLayoutParams().width;
@@ -356,12 +357,12 @@ public class AnnotationsView extends ViewGroup implements AnnotationsToolbar.Act
         }
     }
 
-    private void getScreenRealSize(){
-        Display display =  ((Activity)mContext).getWindowManager().getDefaultDisplay();
+    private void getScreenRealSize() {
+        Display display = ((Activity) mContext).getWindowManager().getDefaultDisplay();
         int realWidth;
         int realHeight;
 
-        if (Build.VERSION.SDK_INT >= 17){
+        if (Build.VERSION.SDK_INT >= 17) {
             //new pleasant way to get real metrics
             DisplayMetrics realMetrics = new DisplayMetrics();
             display.getRealMetrics(realMetrics);
@@ -406,11 +407,10 @@ public class AnnotationsView extends ViewGroup implements AnnotationsToolbar.Act
             Display d = windowManager.getDefaultDisplay();
             screenHeight = d.getHeight();
         }
-
         return screenHeight;
     }
 
-    private int getDisplayWidth(){
+    private int getDisplayWidth() {
         final WindowManager windowManager = (WindowManager) getContext()
                 .getSystemService(Context.WINDOW_SERVICE);
 
@@ -439,7 +439,7 @@ public class AnnotationsView extends ViewGroup implements AnnotationsToolbar.Act
     private int getActionBarHeight() {
         int actionBarHeight = 0;
         Rect rect = new Rect();
-        Window window = ((Activity)mContext).getWindow();
+        Window window = ((Activity) mContext).getWindow();
         window.getDecorView().getWindowVisibleDisplayFrame(rect);
         int statusBarHeight = rect.top;
         int contentViewTop =
@@ -478,7 +478,7 @@ public class AnnotationsView extends ViewGroup implements AnnotationsToolbar.Act
     }
 
     private void moveTouch(float x, float y, boolean curved) {
-        if ( mCurrentPath!= null && mCurrentPath.getPoints()!= null && mCurrentPath.getPoints().size() > 0 ) {
+        if (mCurrentPath != null && mCurrentPath.getPoints() != null && mCurrentPath.getPoints().size() > 0) {
             float mX = mCurrentPath.getEndPoint().x;
             float mY = mCurrentPath.getEndPoint().y;
 
@@ -501,7 +501,7 @@ public class AnnotationsView extends ViewGroup implements AnnotationsToolbar.Act
     private void upTouch(boolean curved) {
         float mLastX = mCurrentPath.getEndPoint().x;
         float mLastY = mCurrentPath.getEndPoint().y;
-        int index = mCurrentPath.getPoints().size()-1; //-2
+        int index = mCurrentPath.getPoints().size() - 1; //-2
         float mX = mCurrentPath.getPoints().get(index).x;
         float mY = mCurrentPath.getPoints().get(index).y;
         if (curved) {
@@ -511,7 +511,7 @@ public class AnnotationsView extends ViewGroup implements AnnotationsToolbar.Act
         }
     }
 
-    private void clearAll(boolean incoming, String cid){
+    private void clearAll(boolean incoming, String cid) {
         JSONArray jsonArray = new JSONArray();
         if (mAnnotationsManager.getAnnotatableList().size() > 0) {
             int i = mAnnotationsManager.getAnnotatableList().size() - 1;
@@ -536,7 +536,7 @@ public class AnnotationsView extends ViewGroup implements AnnotationsToolbar.Act
         if (mAnnotationsManager.getAnnotatableList().size() > 0) {
             int i = mAnnotationsManager.getAnnotatableList().size() - 1;
 
-            while (!removed && i >= 0){
+            while (!removed && i >= 0) {
                 Annotatable annotatable = mAnnotationsManager.getAnnotatableList().get(i);
 
                 if (annotatable.getCId().equals(cid)) {
@@ -547,10 +547,10 @@ public class AnnotationsView extends ViewGroup implements AnnotationsToolbar.Act
             }
             invalidate();
 
-            if (!incoming && !isScreensharing){
+            if (!incoming && !isScreensharing) {
                 JSONArray jsonArray = new JSONArray();
-                    jsonArray.put(cid);
-                    sendAnnotation(mode.toString(), jsonArray.toString());
+                jsonArray.put(cid);
+                sendAnnotation(mode.toString(), jsonArray.toString());
             }
         }
     }
@@ -573,8 +573,7 @@ public class AnnotationsView extends ViewGroup implements AnnotationsToolbar.Act
         mCurrentPaint.setStrokeJoin(Paint.Join.ROUND);
         if (incoming) {
             mCurrentPaint.setStrokeWidth(mIncomingLineWidth);
-        }
-        else {
+        } else {
             mCurrentPaint.setStrokeWidth(mLineWidth);
         }
         if (mode != null && mode == Mode.Pen) {
@@ -596,7 +595,7 @@ public class AnnotationsView extends ViewGroup implements AnnotationsToolbar.Act
         }
     }
 
-    private Bitmap getScreenshot(){
+    private Bitmap getScreenshot() {
         View v1 = mContentView;
         v1.setDrawingCacheEnabled(true);
         Bitmap bitmap = Bitmap.createBitmap(v1.getDrawingCache());
@@ -606,7 +605,7 @@ public class AnnotationsView extends ViewGroup implements AnnotationsToolbar.Act
     }
 
     private void sendAnnotation(String type, String annotation) {
-        if ( mSession != null  && !isScreensharing) {
+        if (mSession != null && !isScreensharing) {
             mSession.sendSignal(new SignalInfo(mSession.getConnection().getConnectionId(), null, type, annotation), null);
         }
     }
@@ -627,15 +626,12 @@ public class AnnotationsView extends ViewGroup implements AnnotationsToolbar.Act
         }
 
         try {
-            /*if ( mRemote != null || mRemoteConnId != null ){
+            if ( mRemoteConnId != null ){
                 jsonObject.put("id", mRemoteConnId);
             }
             else {
-                if ( mLocal != null && mLocal.getStream() != null ) {
-                    jsonObject.put("id", mLocal.getStream().getConnection().getConnectionId());
-                }
-            }*/
-            jsonObject.put("id", mSession.getConnection().getConnectionId());
+                jsonObject.put("id", mSession.getConnection().getConnectionId());
+            }
             jsonObject.put("fromId", mSession.getConnection().getConnectionId());
             jsonObject.put("fromX", x);
             jsonObject.put("fromY", y);
@@ -671,15 +667,12 @@ public class AnnotationsView extends ViewGroup implements AnnotationsToolbar.Act
             videoHeight = videoRenderer.getVideoHeight();
         }
         try {
-            /*if ( mRemote != null || mRemoteConnId != null ){
+            if ( mRemoteConnId != null ){
                 jsonObject.put("id", mRemoteConnId);
             }
             else {
-                if ( mLocal != null && mLocal.getStream() != null ) {
-                    jsonObject.put("id", mLocal.getStream().getConnection().getConnectionId());
-                }
-            }*/
-            jsonObject.put("id", mSession.getConnection().getConnectionId());
+                jsonObject.put("id", mSession.getConnection().getConnectionId());
+            }
             jsonObject.put("fromId", mSession.getConnection().getConnectionId());
             jsonObject.put("fromX", mCurrentPath.getEndPoint().x);
             jsonObject.put("fromY", mCurrentPath.getEndPoint().y);
@@ -707,7 +700,6 @@ public class AnnotationsView extends ViewGroup implements AnnotationsToolbar.Act
 
     private void penAnnotations(String connectionId, String data) {
         mode = Mode.Pen;
-
         // Build object from JSON array
         try {
             JSONArray updates = new JSONArray(data);
@@ -762,7 +754,7 @@ public class AnnotationsView extends ViewGroup implements AnnotationsToolbar.Act
                 if (!json.isNull("color")) {
                     mCurrentColor = Color.parseColor(((String) json.get("color")).toLowerCase());
                 }
-                if (!json.isNull("lineWidth")){
+                if (!json.isNull("lineWidth")) {
                     mIncomingLineWidth = ((Number) json.get("lineWidth")).floatValue();
                 }
 
@@ -803,13 +795,18 @@ public class AnnotationsView extends ViewGroup implements AnnotationsToolbar.Act
                 float iCenterX = iCanvas.get("width") / 2f;
                 float iCenterY = iCanvas.get("height") / 2f;
 
+                float fromX = ((Number) json.get("fromX")).floatValue();
+                float fromY = ((Number) json.get("fromY")).floatValue();
+                float toY = ((Number) json.get("toY")).floatValue();
+                float toX = ((Number) json.get("toX")).floatValue();
 
-                float fromX = centerX - (scale * (iCenterX - ((Number) json.get("fromX")).floatValue()));
-                float toX = centerX - (scale * (iCenterX - ((Number) json.get("toX")).floatValue()));
+                if (platform.equals(SIGNAL_PLATFORM)) {
+                    fromX = centerX - (scale * (iCenterX - ((Number) json.get("fromX")).floatValue()));
+                    toX = centerX - (scale * (iCenterX - ((Number) json.get("toX")).floatValue()));
 
-                float fromY = centerY - (scale * (iCenterY - ((Number) json.get("fromY")).floatValue()));
-                float toY = centerY - (scale * (iCenterY - ((Number) json.get("toY")).floatValue()));
-
+                    fromY = centerY - (scale * (iCenterY - ((Number) json.get("fromY")).floatValue()));
+                    toY = centerY - (scale * (iCenterY - ((Number) json.get("toY")).floatValue()));
+                }
                 fromY = fromY - getActionBarHeight();
                 toY = toY - getActionBarHeight();
 
@@ -820,7 +817,7 @@ public class AnnotationsView extends ViewGroup implements AnnotationsToolbar.Act
                 }
                 mMirrored = videoRenderer.isMirrored();
                 if (mMirrored) {
-                    Log.i("CanvasOffset", "Feed is mirrored");
+                    Log.i(LOG_TAG, "Feed is mirrored");
                     // Revert (Double negative)
                     fromX = this.width - fromX;
                     toX = this.width - toX;
@@ -891,13 +888,6 @@ public class AnnotationsView extends ViewGroup implements AnnotationsToolbar.Act
                     }
                 }
 
-                if (platform.contains("ios") && (i == updates.length()-1)){
-                    try {
-                        addAnnotatable(connectionId);
-                    } catch (Exception e) {
-                        Log.e(LOG_TAG, e.toString());
-                    }
-                }
                 invalidate(); // Need this to finalize the drawing on the screen
             }
 
@@ -906,7 +896,7 @@ public class AnnotationsView extends ViewGroup implements AnnotationsToolbar.Act
         }
     }
 
-    private void textAnnotation(String connectionId, String data) throws Exception{
+    private void textAnnotation(String connectionId, String data) throws Exception {
 
         mode = Mode.Text;
         // Build object from JSON array
@@ -1037,8 +1027,8 @@ public class AnnotationsView extends ViewGroup implements AnnotationsToolbar.Act
     }
 
     //add log events
-    private void addLogEvent(String action, String variation){
-        if ( mAnalytics!= null ) {
+    private void addLogEvent(String action, String variation) {
+        if (mAnalytics != null) {
             mAnalytics.logEvent(action, variation);
         }
     }
@@ -1067,7 +1057,7 @@ public class AnnotationsView extends ViewGroup implements AnnotationsToolbar.Act
         final float x = event.getX();
         final float y = event.getY();
 
-        if (  mode != null ) {
+        if (mode != null) {
             mCurrentColor = mSelectedColor;
             if (mode == Mode.Pen) {
                 switch (event.getAction()) {
@@ -1075,8 +1065,8 @@ public class AnnotationsView extends ViewGroup implements AnnotationsToolbar.Act
                         mAnnotationsActive = true;
                         createPathAnnotatable(false);
                         beginTouch(x, y);
-                        mCurrentPath.addPoint(new PointF(x,y));
-                        sendAnnotation(mode.toString(), buildSignalFromPoint(x,y, true, false));
+                        mCurrentPath.addPoint(new PointF(x, y));
+                        sendAnnotation(mode.toString(), buildSignalFromPoint(x, y, true, false));
                         invalidate();
                         addLogEvent(OpenTokConfig.LOG_ACTION_START_DRAWING, OpenTokConfig.LOG_VARIATION_SUCCESS);
                     }
@@ -1084,18 +1074,18 @@ public class AnnotationsView extends ViewGroup implements AnnotationsToolbar.Act
                     case MotionEvent.ACTION_MOVE: {
                         moveTouch(x, y, true);
 
-                        sendAnnotation(mode.toString(), buildSignalFromPoint(x,y, false, false));
-                        mCurrentPath.addPoint(new PointF(x,y));
+                        sendAnnotation(mode.toString(), buildSignalFromPoint(x, y, false, false));
+                        mCurrentPath.addPoint(new PointF(x, y));
                         invalidate();
                     }
                     break;
                     case MotionEvent.ACTION_UP: {
                         upTouch();
-                        sendAnnotation(mode.toString(), buildSignalFromPoint(x,y, false, true));
+                        sendAnnotation(mode.toString(), buildSignalFromPoint(x, y, false, true));
                         try {
                             addAnnotatable(mSession.getConnection().getConnectionId());
 
-                        }catch (Exception e){
+                        } catch (Exception e) {
                             Log.e(LOG_TAG, e.toString());
                         }
                         mAnnotationsActive = false;
@@ -1172,7 +1162,7 @@ public class AnnotationsView extends ViewGroup implements AnnotationsToolbar.Act
                                 try {
                                     addAnnotatable(mSession.getConnection().getConnectionId());
 
-                                }catch (Exception e){
+                                } catch (Exception e) {
                                     Log.e(LOG_TAG, e.toString());
                                 }
 
@@ -1222,7 +1212,7 @@ public class AnnotationsView extends ViewGroup implements AnnotationsToolbar.Act
                     canvas.drawText(mCurrentText.getEditText().getText().toString(), mCurrentText.getX(), 340, mCurrentPaint);
                 }
             }
-            if ( mCurrentPath != null ) {
+            if (mCurrentPath != null) {
                 canvas.drawPath(mCurrentPath, mCurrentPaint);
             }
         }
@@ -1246,7 +1236,7 @@ public class AnnotationsView extends ViewGroup implements AnnotationsToolbar.Act
 
     @Override
     public void onItemSelected(final View v, final boolean selected) {
-        ((Activity)mContext).runOnUiThread(new Runnable() {
+        ((Activity) mContext).runOnUiThread(new Runnable() {
             @Override
             public void run() {
 
@@ -1305,7 +1295,8 @@ public class AnnotationsView extends ViewGroup implements AnnotationsToolbar.Act
                 if (mode != null) {
                     mListener.onAnnotationsSelected(mode);
                 }
-            }});
+            }
+        });
     }
 
     @Override
@@ -1317,10 +1308,14 @@ public class AnnotationsView extends ViewGroup implements AnnotationsToolbar.Act
 
     @Override
     public void onSignalReceived(final SignalInfo signalInfo, boolean isSelfSignal) {
-        Log.i(LOG_TAG, "Signal info: "+signalInfo.mSignalName);
-        ((Activity)mContext).runOnUiThread(new Runnable() {
+        Log.i(LOG_TAG, "Signal info: " + signalInfo.mSignalName);
+        ((Activity) mContext).runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                if (!loaded) {
+                    resize();
+                    loaded = true;
+                }
 
                 String cid = signalInfo.mSrcConnId;
                 String mycid = signalInfo.mDstConnId;
@@ -1354,12 +1349,10 @@ public class AnnotationsView extends ViewGroup implements AnnotationsToolbar.Act
                                     } catch (Exception e) {
                                         Log.e(LOG_TAG, e.toString());
                                     }
-                                }
-                                else {
+                                } else {
                                     if (signalInfo.mSignalName.equalsIgnoreCase("otAnnotation_requestPlatform")) {
                                         try {
                                             JSONObject jsonObject = new JSONObject();
-
                                             jsonObject.put("platform", "android");
                                             mSession.sendSignal(new SignalInfo(mSession.getConnection().getConnectionId(), null, "otAnnotation_mobileScreenShare", jsonObject), null);
 
@@ -1372,7 +1365,8 @@ public class AnnotationsView extends ViewGroup implements AnnotationsToolbar.Act
                         }
                     }
                 }
-            }});
+            }
+        });
     }
 
 }
