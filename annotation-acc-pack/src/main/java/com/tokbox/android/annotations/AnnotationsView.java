@@ -241,7 +241,7 @@ public class AnnotationsView extends ViewGroup implements AnnotationsToolbar.Act
      * @param toolbar AnnotationsToolbar
      */
     public void attachToolbar(AnnotationsToolbar toolbar) throws Exception {
-
+        addLogEvent(OpenTokConfig.LOG_ACTION_USE_TOOLBAR, OpenTokConfig.LOG_VARIATION_ATTEMPT);
         if (toolbar == null) {
             throw new Exception("AnnotationsToolbar cannot be null");
         }
@@ -301,6 +301,7 @@ public class AnnotationsView extends ViewGroup implements AnnotationsToolbar.Act
     }
 
     private void init() {
+        addLogEvent(OpenTokConfig.LOG_ACTION_INITIALIZE, OpenTokConfig.LOG_VARIATION_ATTEMPT);
         String source = getContext().getPackageName();
 
         SharedPreferences prefs = getContext().getSharedPreferences("opentok", Context.MODE_PRIVATE);
@@ -327,14 +328,10 @@ public class AnnotationsView extends ViewGroup implements AnnotationsToolbar.Act
         mCurrentColor = getResources().getColor(R.color.picker_color_orange);
         mSelectedColor = mCurrentColor;
         this.setVisibility(View.GONE);
-
         addLogEvent(OpenTokConfig.LOG_ACTION_INITIALIZE, OpenTokConfig.LOG_VARIATION_SUCCESS);
     }
 
     private void resize() {
-        int widthPixels = 0;
-        int heightPixels = 0;
-
         if (this.getLayoutParams() == null || this.getLayoutParams().width <= 0 || this.getLayoutParams().height <= 0 || defaultLayout) {
             //default case
             defaultLayout = true;
@@ -352,8 +349,6 @@ public class AnnotationsView extends ViewGroup implements AnnotationsToolbar.Act
         } else {
 
             defaultLayout = false;
-            widthPixels = this.getLayoutParams().width;
-            heightPixels = this.getLayoutParams().height - getStatusBarHeight();
         }
     }
 
@@ -1060,8 +1055,10 @@ public class AnnotationsView extends ViewGroup implements AnnotationsToolbar.Act
         if (mode != null) {
             mCurrentColor = mSelectedColor;
             if (mode == Mode.Pen) {
+                addLogEvent(OpenTokConfig.LOG_ACTION_FREEHAND, OpenTokConfig.LOG_VARIATION_ATTEMPT);
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN: {
+                        addLogEvent(OpenTokConfig.LOG_ACTION_START_DRAWING, OpenTokConfig.LOG_VARIATION_ATTEMPT);
                         mAnnotationsActive = true;
                         createPathAnnotatable(false);
                         beginTouch(x, y);
@@ -1080,6 +1077,7 @@ public class AnnotationsView extends ViewGroup implements AnnotationsToolbar.Act
                     }
                     break;
                     case MotionEvent.ACTION_UP: {
+                        addLogEvent(OpenTokConfig.LOG_ACTION_END_DRAWING, OpenTokConfig.LOG_VARIATION_ATTEMPT);
                         upTouch();
                         sendAnnotation(mode.toString(), buildSignalFromPoint(x, y, false, true));
                         try {
@@ -1094,10 +1092,10 @@ public class AnnotationsView extends ViewGroup implements AnnotationsToolbar.Act
                     }
                     break;
                 }
-
                 addLogEvent(OpenTokConfig.LOG_ACTION_FREEHAND, OpenTokConfig.LOG_VARIATION_SUCCESS);
             } else {
                 if (mode == Mode.Text) {
+                    addLogEvent(OpenTokConfig.LOG_ACTION_TEXT, OpenTokConfig.LOG_VARIATION_ATTEMPT);
                     final String myString;
 
                     mAnnotationsActive = true;
@@ -1173,7 +1171,6 @@ public class AnnotationsView extends ViewGroup implements AnnotationsToolbar.Act
                             return false;
                         }
                     });
-
                     addLogEvent(OpenTokConfig.LOG_ACTION_TEXT, OpenTokConfig.LOG_VARIATION_SUCCESS);
                 }
             }
@@ -1241,6 +1238,7 @@ public class AnnotationsView extends ViewGroup implements AnnotationsToolbar.Act
             public void run() {
 
                 if (v.getId() == R.id.done) {
+                    addLogEvent(OpenTokConfig.LOG_ACTION_DONE, OpenTokConfig.LOG_VARIATION_ATTEMPT);
                     mode = Mode.Clear;
                     clearAll(false, mSession.getConnection().getConnectionId());
                     AnnotationsView.this.setVisibility(GONE);
@@ -1248,12 +1246,13 @@ public class AnnotationsView extends ViewGroup implements AnnotationsToolbar.Act
                     addLogEvent(OpenTokConfig.LOG_ACTION_DONE, OpenTokConfig.LOG_VARIATION_SUCCESS);
                 }
                 if (v.getId() == R.id.erase) {
+                    addLogEvent(OpenTokConfig.LOG_ACTION_ERASE, OpenTokConfig.LOG_VARIATION_ATTEMPT);
                     mode = Mode.Undo;
                     undoAnnotation(false, mSession.getConnection().getConnectionId());
-
                     addLogEvent(OpenTokConfig.LOG_ACTION_ERASE, OpenTokConfig.LOG_VARIATION_SUCCESS);
                 }
                 if (v.getId() == R.id.screenshot) {
+                    addLogEvent(OpenTokConfig.LOG_ACTION_SCREENCAPTURE, OpenTokConfig.LOG_VARIATION_ATTEMPT);
                     //screenshot capture
                     mode = Mode.Capture;
                     if (videoRenderer != null) {
@@ -1301,6 +1300,7 @@ public class AnnotationsView extends ViewGroup implements AnnotationsToolbar.Act
 
     @Override
     public void onColorSelected(int color) {
+        addLogEvent(OpenTokConfig.LOG_ACTION_PICKER_COLOR, OpenTokConfig.LOG_VARIATION_ATTEMPT);
         this.mCurrentColor = color;
         mSelectedColor = color;
         addLogEvent(OpenTokConfig.LOG_ACTION_PICKER_COLOR, OpenTokConfig.LOG_VARIATION_SUCCESS);
