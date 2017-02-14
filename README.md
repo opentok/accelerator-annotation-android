@@ -1,7 +1,12 @@
 ![logo](tokbox-logo.png)
 
-# OpenTok Accelerator Annotations for Android<br/>Version 1.0.0-beta
 [![Build Status](https://travis-ci.com/opentok/accelerator-annotation-android.svg?token=CxoLD2TL8UCwsuAUJUsN&branch=master)](https://travis-ci.com/opentok/accelerator-annotation-android)
+[![GitHub release](https://img.shields.io/github/release/qubyte/rubidium.svg)](./README.md)
+[![license MIT](https://img.shields.io/github/license/mashape/apistatus.svg)](./.github/LICENSE)
+
+----------
+
+# OpenTok Accelerator Annotation for Android<br/>
 
 The OpenTok Annotations Accelerator Pack provides functionality you can add to your OpenTok applications that enables users to have the ability to annotate on a local or remote screen.
 
