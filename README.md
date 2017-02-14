@@ -1,7 +1,7 @@
 ![logo](tokbox-logo.png)
 
 [![Build Status](https://travis-ci.com/opentok/accelerator-annotation-android.svg?token=CxoLD2TL8UCwsuAUJUsN&branch=master)](https://travis-ci.com/opentok/accelerator-annotation-android)
-[![GitHub release](https://img.shields.io/github/release/qubyte/rubidium.svg)](./README.md)
+[![GitHub release](https://img.shields.io/github/release/opentok/accelerator-annotation-android.svg)](./README.md)
 [![license MIT](https://img.shields.io/github/license/mashape/apistatus.svg)](./.github/LICENSE)
 
 ----------
