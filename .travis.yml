@@ -16,7 +16,7 @@ before_script:
 - gradle wrapper
 script:
 - if [[ "$TRAVIS_PULL_REQUEST" == "false" && "$TRAVIS_BRANCH" == "master" ]]; then
-    ./gradlew maven;
+    ./gradlew uploadArchives;
     PRINTVERSION=$(./gradlew -q printVersionRelease);
     VERSION=$(echo $PRINTVERSION | cut -c -5);
     git tag v$VERSION;
