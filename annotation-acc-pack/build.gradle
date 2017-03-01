@@ -55,6 +55,10 @@ android {
             archiveName = "${archivesBaseName}-${version}.zip"
         }
 
+        task("printVersion${variant.name.capitalize()}") {
+          println project.version
+        }
+
         zipBundle.dependsOn build
         zipBundle.dependsOn javadoc
 
