@@ -16,16 +16,13 @@ before_script:
 - gradle wrapper
 script:
 - if [[ "$TRAVIS_PULL_REQUEST" == "false" && "$TRAVIS_BRANCH" == "master" ]]; then
-    # Publish to Maven
-    ./gradle maven
-    # Git release
-    PRINTVERSION=$(./gradlew -q printVersionRelease)
-    VERSION=$(echo $PRINTVERSION | cut -c -5)
-    git tag v$VERSION
-    git push origin v$VERSION
+    ./gradlew maven;
+    PRINTVERSION=$(./gradlew -q printVersionRelease);
+    VERSION=$(echo $PRINTVERSION | cut -c -5);
+    git tag v$VERSION;
+    git push origin v$VERSION;
   else
-    # Run tests
-    ./gradlew test
+    ./gradlew test;
   fi
 notifications:
   slack:
