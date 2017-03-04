@@ -20,7 +20,7 @@ before_script:
 - export PATH=$GRADLE_HOME/bin:$PATH
 - gradle wrapper
 - if [[ "$TRAVIS_PULL_REQUEST" == "false" && "$TRAVIS_BRANCH" == "master" ]]; then
-    echor "Release mode..."
+    echo "Release mode..."
   else
     echo no | android create avd --force -n test -t $EMU --abi armeabi-v7a
     emulator -avd test -no-skin -no-audio -no-window &
