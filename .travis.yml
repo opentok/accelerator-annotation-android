@@ -30,7 +30,7 @@ before_script:
 script:
 - if [[ "$TRAVIS_PULL_REQUEST" == "false" && "$TRAVIS_BRANCH" == "master" ]]; then
     ./gradlew build;
-    ./gradlew uploadArchives;
+    ./gradlew uploadArchives -PMAVEN_USERNAME=$MAVEN_USERNAME -PMAVEN_PASSWORD=$MAVEN_PASSWORD;
     PRINTVERSION=$(./gradlew -q printVersionRelease);
     VERSION=$(echo $PRINTVERSION | cut -c -5);
     git tag v$VERSION;
