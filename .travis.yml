@@ -1,8 +1,8 @@
 language: android
 jdk: oraclejdk8
-env:
-  - EMU=android-22
-  - EMU=android-25
+#env:
+#  - EMU=android-22
+#  - EMU=android-25
 android:
   components:
   - platform-tools
