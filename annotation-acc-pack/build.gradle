@@ -63,15 +63,17 @@ android {
 
         zipBundle.dependsOn build
         zipBundle.dependsOn javadoc
+
     }
+
 }
 
-if (project.hasProperty("$MAVEN_USERNAME") && project.hasProperty("$MAVEN_PASSWORD")) {
+if (project.hasProperty("MAVEN_USERNAME") && project.hasProperty("MAVEN_PASSWORD")) {
     uploadArchives {
         repositories {
             mavenDeployer {
                 repository(url: "https://api.bintray.com/maven/tokbox/maven/${ARTIFACT_ID}/;publish=1") {
-                    authentication(userName: $MAVEN_USERNAME ? $MAVEN_USERNAME : "", password: $MAVEN_PASSWORD ? $MAVEN_PASSWORD : "")
+                    authentication(userName: "$MAVEN_USERNAME" ? "$MAVEN_USERNAME" : "", password: "$MAVEN_PASSWORD" ? "$MAVEN_PASSWORD" : "")
                 }
                 def (revision, buildTime) = getRevisionAndTime()
                 pom.version = "${version}"
@@ -84,11 +86,11 @@ if (project.hasProperty("$MAVEN_USERNAME") && project.hasProperty("$MAVEN_PASSWO
 
 def checkMaven = task("checkUploadArchivesDeps") {
     doFirst {
-        if (!project.hasProperty("$MAVEN_USERNAME")) {
-            throw new GradleException("$MAVEN_USERNAME Property not defined")
+        if (!project.hasProperty("MAVEN_USERNAME")) {
+            throw new GradleException("MAVEN_USERNAME Property not defined")
         }
-        if (!project.hasProperty("$MAVEN_PASSWORD")) {
-            throw new GradleException("$MAVEN_PASSWORD Property not defined")
+        if (!project.hasProperty("MAVEN_PASSWORD")) {
+            throw new GradleException("MAVEN_PASSWORD Property not defined")
         }
     }
 }
