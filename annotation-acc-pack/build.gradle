@@ -4,7 +4,9 @@ apply plugin: 'maven'
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.1"
-
+    lintOptions {
+        abortOnError false
+    }
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 25
@@ -53,6 +55,10 @@ android {
             exclude '**/lint-results-debug_files/**'
             destinationDir = file(".")
             archiveName = "${archivesBaseName}-${version}.zip"
+        }
+
+        task("printVersion${variant.name.capitalize()}") {
+          println project.version
         }
 
         zipBundle.dependsOn build
