@@ -35,7 +35,7 @@ script:
     git tag v$VERSION;
     git push origin v$VERSION;
   else
-    ./gradlew cAT;
+    ./gradlew build;
   fi
 notifications:
   slack:
