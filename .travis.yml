@@ -29,6 +29,7 @@ before_script:
 #- adb shell input keyevent 82 &
 script:
 - if [[ "$TRAVIS_PULL_REQUEST" == "false" && "$TRAVIS_BRANCH" == "master" ]]; then
+    ./gradlew build;
     ./gradlew uploadArchives;
     PRINTVERSION=$(./gradlew -q printVersionRelease);
     VERSION=$(echo $PRINTVERSION | cut -c -5);
