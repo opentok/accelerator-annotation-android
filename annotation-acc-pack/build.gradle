@@ -106,6 +106,9 @@ def getRevisionAndTime() {
 }
 
 dependencies {
+    repositories {
+      maven { url 'http://tokbox.bintray.com/maven' }
+    }
     compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile 'com.android.support:appcompat-v7:25+'
     androidTestCompile 'junit:junit:4.+'
