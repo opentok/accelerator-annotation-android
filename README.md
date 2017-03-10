@@ -179,6 +179,6 @@ public class MainActivity
 }
 ```
 
-### One to one sample app using the Accelerator Annotation with best-practices for Android [here](https://github.com/opentok/accelerator-sample-apps-android).
+### Multiparty video communication sample app using the Accelerator Annotation with best-practices for Android [here](https://github.com/opentok/accelerator-sample-apps-android).
 
 ![screenshot](screenshot.png)
