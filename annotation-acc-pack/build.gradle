@@ -2,18 +2,18 @@ apply plugin: 'com.android.library'
 apply plugin: 'maven'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.1"
+    compileSdkVersion 26
+    buildToolsVersion "26.0.2"
     lintOptions {
         abortOnError false
     }
     defaultConfig {
         minSdkVersion 16
-        targetSdkVersion 25
+        targetSdkVersion 26
         versionCode 1
-        versionName "1.0.0"
+        versionName "1.0.1"
         project.archivesBaseName = "opentok-accelerator-annotation"
-        project.version = "1.0.0"
+        project.version = "1.0.1"
         testApplicationId "com.tokbox.android.annotations.test"
         testInstrumentationRunner "com.tokbox.android.annotations.testbase.TestRunner"
     }
@@ -110,7 +110,7 @@ dependencies {
       maven { url 'http://tokbox.bintray.com/maven' }
     }
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    androidTestCompile 'com.android.support:appcompat-v7:25+'
+    androidTestCompile 'com.android.support:appcompat-v7:26.1.0'
     androidTestCompile 'junit:junit:4.+'
     androidTestCompile files('src/androidTest/libs/android-junit-report-1.5.8.jar')
     compile 'com.opentok.android:opentok-accelerator-core:1.0.+'
