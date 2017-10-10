@@ -2,6 +2,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'maven'
 
 android {
+    def acceleratorVersion = '1.0.1'
     compileSdkVersion 26
     buildToolsVersion "26.0.2"
     lintOptions {
@@ -13,7 +14,7 @@ android {
         versionCode 1
         versionName "1.0.1"
         project.archivesBaseName = "opentok-accelerator-annotation"
-        project.version = "1.0.1"
+        project.version = acceleratorVersion
         testApplicationId "com.tokbox.android.annotations.test"
         testInstrumentationRunner "com.tokbox.android.annotations.testbase.TestRunner"
     }
@@ -21,6 +22,12 @@ android {
     buildTypes {
         release {
             minifyEnabled false
+            buildConfigField 'String', 'acceleratorVersion', '\"'+acceleratorVersion+'\"'
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            minifyEnabled false
+            buildConfigField 'String', 'acceleratorVersion', '\"'+acceleratorVersion+'\"'
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
