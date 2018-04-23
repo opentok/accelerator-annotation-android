@@ -22,7 +22,7 @@ This section shows you how to use the OpenTok Accelerator Annotations.
 
 ### Using the repository
 
-1. Clone the [OpenTok Accelerator Annotations repo](https://github.com/opentok/accelerator-annotations-android).
+1. Clone the [OpenTok Accelerator Annotations repo](https://github.com/opentok/accelerator-annotation-android).
 2. Start Android Studio and create a new project.
 4. From the project view, right-click the app name and select **New > Module > Import Gradle Project**.
 5. Navigate to the directory in which you cloned **OpenTok Accelerator Annotation**, select **accelerator-annotation-android**, and click **Finish**.
