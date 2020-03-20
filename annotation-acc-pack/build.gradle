@@ -117,7 +117,7 @@ dependencies {
       maven { url 'http://tokbox.bintray.com/maven' }
     }
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'androidx.appcompat:appcompat:1.0.0'
+    implementation 'androidx.appcompat:appcompat:1.1.0'
     testImplementation 'junit:junit:4.12'
     androidTestCompile files('src/androidTest/libs/android-junit-report-1.5.8.jar')
     implementation 'com.opentok.android:opentok-accelerator-core:1.0.+'
