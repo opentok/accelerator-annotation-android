@@ -2,17 +2,17 @@ apply plugin: 'com.android.library'
 apply plugin: 'maven'
 
 android {
-    def acceleratorVersion = '1.0.2'
-    compileSdkVersion 27
-    buildToolsVersion "27.0.2"
+    def acceleratorVersion = '1.0.3'
+    compileSdkVersion 29
+    buildToolsVersion "29.0.2"
     lintOptions {
         abortOnError false
     }
     defaultConfig {
         minSdkVersion 16
-        targetSdkVersion 27
+        targetSdkVersion 29
         versionCode 1
-        versionName "1.0.2"
+        versionName "1.0.3"
         project.archivesBaseName = "opentok-accelerator-annotation"
         project.version = acceleratorVersion
         testApplicationId "com.tokbox.android.annotations.test"
@@ -43,7 +43,7 @@ android {
             def outputFile = output.outputFile
             if (outputFile != null && outputFile.name.endsWith('.aar')) {
                 def fileName = "${archivesBaseName}-${version}.aar"
-                output.outputFile = new File(outputFile.parent, fileName)
+                output.outputFileName = fileName
             }
         }
 
@@ -116,9 +116,9 @@ dependencies {
     repositories {
       maven { url 'http://tokbox.bintray.com/maven' }
     }
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    androidTestCompile 'com.android.support:appcompat-v7:27.0.2'
-    androidTestCompile 'junit:junit:4.+'
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    testImplementation 'junit:junit:4.12'
     androidTestCompile files('src/androidTest/libs/android-junit-report-1.5.8.jar')
-    compile 'com.opentok.android:opentok-accelerator-core:1.0.+'
+    implementation 'com.opentok.android:opentok-accelerator-core:1.0.+'
 }

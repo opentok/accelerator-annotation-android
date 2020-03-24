@@ -5,16 +5,16 @@ android:
   components:
   - platform-tools
   - tools
-  - build-tools-27.0.2
-  - android-27
+  - build-tools-29.0.2
+  - android-29
   - add-on
   - extra-android-support
   - extra-google-m2repository
   - extra-android-m2repository
 before_script:
-- wget http://services.gradle.org/distributions/gradle-2.14.1-bin.zip
-- unzip gradle-2.14.1-bin.zip
-- export GRADLE_HOME=$PWD/gradle-2.14.1
+- wget https://services.gradle.org/distributions/gradle-6.2-bin.zip
+- unzip gradle-6.2-bin.zip
+- export GRADLE_HOME=$PWD/gradle-6.2
 - export PATH=$GRADLE_HOME/bin:$PATH
 - gradle wrapper
 script:
