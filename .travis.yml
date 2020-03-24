@@ -17,10 +17,6 @@ before_script:
 - export GRADLE_HOME=$PWD/gradle-2.14.1
 - export PATH=$GRADLE_HOME/bin:$PATH
 - gradle wrapper
-#- echo no | android create avd -n test -f -t $EMU --abi armeabi-v7a
-#- emulator -avd test -no-skin -no-audio -no-window &
-#- android-wait-for-emulator
-#- adb shell input keyevent 82 &
 script:
 - if [[ "$TRAVIS_PULL_REQUEST" == "false" && "$TRAVIS_BRANCH" == "master" ]]; then
     ./gradlew build;
@@ -28,7 +24,7 @@ script:
     PRINTVERSION=$(./gradlew -q printVersionRelease);
     VERSION=$(echo $PRINTVERSION | cut -c -5);
     git tag v$VERSION;
-    git push origin v$VERSION;
+    git push --quiet https://$GITHUBKEY@github.com/opentok/accelerator-annotation-android v$VERSION;
   else
     ./gradlew assembleRelease;
   fi
