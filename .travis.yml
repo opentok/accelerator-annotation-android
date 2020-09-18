@@ -11,10 +11,11 @@ android:
   - extra-android-support
   - extra-google-m2repository
   - extra-android-m2repository
+
 before_script:
-- wget https://services.gradle.org/distributions/gradle-6.2-bin.zip
-- unzip gradle-6.2-bin.zip
-- export GRADLE_HOME=$PWD/gradle-6.2
+- wget https://services.gradle.org/distributions/gradle-6.6.1-bin.zip
+- unzip gradle-6.6.1-bin.zip
+- export GRADLE_HOME=$PWD/gradle-6.6.1
 - export PATH=$GRADLE_HOME/bin:$PATH
 - gradle wrapper
 script:
