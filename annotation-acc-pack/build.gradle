@@ -61,7 +61,7 @@ android {
             include '**/docs/**'
             exclude '**/lint-results-debug_files/**'
             destinationDirectory = file(".")
-            archiveFileName = "${archivesBaseName}-${version}.zip"
+            archiveFileName = "${archivesBaseName}-${archiveVersion}.zip"
         }
 
         task("printVersion${variant.name.capitalize()}") {
