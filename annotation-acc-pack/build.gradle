@@ -42,7 +42,7 @@ android {
         variant.outputs.each { output ->
             def outputFile = output.outputFile
             if (outputFile != null && outputFile.name.endsWith('.aar')) {
-                def fileName = "${archivesBaseName}-${version}.aar"
+                def fileName = "${archivesBaseName}-${archiveVersion}.aar"
                 output.outputFileName = fileName
             }
         }
