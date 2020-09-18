@@ -12,7 +12,7 @@ android {
         minSdkVersion 16
         targetSdkVersion 30
         versionCode 1
-        versionName "1.0.3"
+        versionName "1.0.5"
         project.archivesBaseName = "opentok-accelerator-annotation"
         project.version = acceleratorVersion
         testApplicationId "com.tokbox.android.annotations.test"
@@ -30,11 +30,6 @@ android {
             buildConfigField 'String', 'acceleratorVersion', '\"'+acceleratorVersion+'\"'
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
-    }
-
-    packagingOptions {
-        exclude 'META-INF/ASL2.0'
-        exclude 'META-INF/LICENSE'
     }
 
     libraryVariants.all { variant ->
