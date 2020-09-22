@@ -1,6 +1,8 @@
 # OpenTok Accelerator Annotation for Android
 
-[![Build Status](https://travis-ci.com/opentok/accelerator-annotation-android.svg?token=CxoLD2TL8UCwsuAUJUsN&branch=master)](https://travis-ci.com/opentok/accelerator-annotation-android) [![license MIT](https://img.shields.io/github/license/mashape/apistatus.svg)](./.github/LICENSE)
+[![Build Status](https://travis-ci.com/opentok/accelerator-annotation-android.svg?token=CxoLD2TL8UCwsuAUJUsN&branch=master)](https://travis-ci.com/opentok/accelerator-annotation-android)
+[![GitHub release](https://img.shields.io/github/release/opentok/accelerator-annotation-android.svg)](./README.md)
+[![license MIT](https://img.shields.io/github/license/mashape/apistatus.svg)](./.github/LICENSE)
 
 ----------
 
@@ -26,7 +28,7 @@ This section shows you how to use the OpenTok Accelerator Annotations.
 5. Open the **build.gradle** file for the app and ensure the following lines have been added to the `dependencies` section:
 
 ```gradle
-   compile project(‘:accelerator-annotation-android')
+implementation project(‘:accelerator-annotation-android')
 ```
 
 #### Using Maven
@@ -40,7 +42,7 @@ maven { url  "http://tokbox.bintray.com/maven" }
 2. Modify the **build.gradle** for your activity and add the following code snippet to the section labeled 'dependencies’:
 
 ```gradle
-compile 'com.opentok.android:opentok-accelerator-annotation:1.0.0'
+implementation 'com.opentok.android:opentok-accelerator-annotation:x.y.z'
 ```
 
 ## Exploring the code
