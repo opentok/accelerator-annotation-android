@@ -1,3 +1,5 @@
+**This project is no lnger maintained. Please use [accelerator-core-android](https://github.com/opentok/accelerator-core-android]) instead**
+
 # OpenTok Accelerator Annotation for Android
 
 [![Build Status](https://travis-ci.org/opentok/accelerator-annotation-android.svg?branch=master)](https://travis-ci.org/opentok/accelerator-annotation-android)
