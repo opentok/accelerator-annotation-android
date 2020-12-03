@@ -1,4 +1,4 @@
-**This project is no longer maintained. Please use [accelerator-core-android](https://github.com/opentok/accelerator-core-android]) instead**
+# This project is no longer maintained. Please use [accelerator-core-android](https://github.com/opentok/accelerator-core-android) instead
 
 # OpenTok Accelerator Annotation for Android
 
